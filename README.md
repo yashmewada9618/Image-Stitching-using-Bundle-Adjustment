@@ -37,6 +37,7 @@ $$\mathbf{H} =
     h_{21} & h_{22} & y \\
     h_{31} & h_{32} & 1 \\
 \end{bmatrix}$$
+
 Then I did SVD of the top left matrix of this H matrix to obtaint the Rotation matrix and then $$\tan^{-1}$$ will give me the pose of the image. Although there was no difference in this case where we directly take the top left corner of the H matrix to compute the value of $\theta$ or decompose it and then take proper rotation matrix because ther vertices are just points, but decomposing the top left of H matrix to obtain R matrix made sense theoretically.
 
 This pose is then further given to the factor graph to generate the graph and then eventually optimise it using *Levenberg-Marquardt* algorithm.
@@ -44,14 +45,14 @@ This pose is then further given to the factor graph to generate the graph and th
 
 The way I have calculated the covariance is based on the number of matches between the images, the more the matches the less the covariance. I have used the following formula to calculate the covariance:
 
-
 $$\begin{align*}
-    \text{covar\_multiplier} = \exp(n - \text{MAX\_MATCHES})\\
-    exx = \left| \frac{x}{30} \right| \cdot \text{covar\_multiplier}\\
-    eyy = \left| \frac{y}{30} \right| \cdot \text{covar\_multiplier}\\
-    ett = \left| \frac{\theta}{30 \cdot 10.0} \right| \cdot \text{covar\_multiplier}\\
-    \text{diag\_noise} = [ \text{exx}, \text{eyy}, \text{ett} ]
-\end{align*}$$
+    \text{covarmultiplier} = \exp(n - \text{MAXMATCHES})\\
+    exx = \left| \frac{x}{30} \right| \cdot \text{covarmultiplier}\\
+    eyy = \left| \frac{y}{30} \right| \cdot \text{covarmultiplier}\\
+    ett = \left| \frac{\theta}{30 \cdot 10.0} \right| \cdot \text{covarmultiplier}\\
+    \text{diagnoise} = [ \text{exx}, \text{eyy}, \text{ett} ]
+\end{align*}
+$$
 
 
 The above expression is called exponential scaling of covariance based on the number of matches. Exponential scaling, which can provide more drastic adjustments based on the number of matches.
