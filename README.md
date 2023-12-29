@@ -43,6 +43,8 @@ This pose is then further given to the factor graph to generate the graph and th
 
 
 The way I have calculated the covariance is based on the number of matches between the images, the more the matches the less the covariance. I have used the following formula to calculate the covariance:
+
+
 $$\begin{align*}
     \text{covar\_multiplier} = \exp(n - \text{MAX\_MATCHES})\\
     exx = \left| \frac{x}{30} \right| \cdot \text{covar\_multiplier}\\
@@ -50,6 +52,8 @@ $$\begin{align*}
     ett = \left| \frac{\theta}{30 \cdot 10.0} \right| \cdot \text{covar\_multiplier}\\
     \text{diag\_noise} = [ \text{exx}, \text{eyy}, \text{ett} ]
 \end{align*}$$
+
+
 The above expression is called exponential scaling of covariance based on the number of matches. Exponential scaling, which can provide more drastic adjustments based on the number of matches.
 
 
